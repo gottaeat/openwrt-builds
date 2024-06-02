@@ -1,0 +1,12 @@
+--- a/feeds/luci/collections/luci-light/Makefile	2023-12-31 20:42:08.094337695 +0300
++++ b/feeds/luci/collections/luci-light/Makefile	2023-12-31 20:41:25.208614452 +0300
+@@ -13,9 +13,7 @@
+ LUCI_DESCRIPTION:=Light OpenWrt set including admin support and the default Bootstrap theme
+ LUCI_DEPENDS:= \
+ 	+IPV6:luci-proto-ipv6 \
+-	+luci-app-firewall \
+ 	+luci-mod-admin-full \
+-	+luci-proto-ppp \
+ 	+luci-theme-bootstrap \
+ 	+rpcd-mod-rrdns \
+ 	+uhttpd \

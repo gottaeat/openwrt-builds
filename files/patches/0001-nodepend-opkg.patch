@@ -1,0 +1,12 @@
+--- a/feeds/luci/collections/luci/Makefile	2023-12-11 02:13:33.861143124 +0300
++++ b/feeds/luci/collections/luci/Makefile	2023-12-11 02:01:31.908110732 +0300
+@@ -12,8 +12,7 @@
+ LUCI_TITLE:=LuCI interface with Uhttpd as Webserver (default)
+ LUCI_DESCRIPTION:=Standard OpenWrt set including package management and attended sysupgrades support
+ LUCI_DEPENDS:= \
+-	+luci-light \
+-	+luci-app-opkg
++	+luci-light
+ 
+ PKG_LICENSE:=Apache-2.0
+ 
