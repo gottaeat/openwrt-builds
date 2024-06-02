@@ -75,6 +75,9 @@ class TemplateOpenWRT:
     _REPO_DIR = "/mnt/mss/stuff/techy-bits/git/openwrt-builds"
     _VAULT_DIR = "/mnt/mss/stuff/techy-bits/git/vault/openwrt-build"
 
+    _WRT_LIST = ["mi4a"]
+    _SWITCH_LIST = []
+
     def __init__(self):
         self.logger = None
         self.context = None
@@ -117,11 +120,14 @@ class TemplateOpenWRT:
 
         # check key and value presence
         required_keys = {
-            "root": ["hostname", "ssh", "time", "radios"],
+            "root": ["hostname", "ssh", "time"],
             "ssh": ["authorized_keys", "port"],
             "time": ["timezone", "zonename", "ntp"],
-            "radios": ["passwd", "path", "ssid"],
         }
+
+        if self.device in self._WRT_LIST:
+            required_keys["root"].append("radios")
+            required_keys["radios"] = ["passwd", "path", "ssid"]
 
         for key, value in required_keys.items():
             if key == "root":
@@ -207,8 +213,6 @@ class TemplateOpenWRT:
     def run(self):
         self._set_logger()
         self._parse_args()
-
-        print(self.device_rootfs)
 
         if os.path.isdir(self.device_rootfs):
             self.logger.info("templating rootfs for %s", self.device)
