@@ -72,7 +72,6 @@ class TemplateOpenWRTFormatter(logging.Formatter):
 
 
 class TemplateOpenWRT:
-    _REPO_DIR = "/mnt/mss/stuff/techy-bits/git/openwrt-builds"
     _VAULT_DIR = "/mnt/mss/stuff/techy-bits/git/vault/openwrt-build"
 
     _WRT_LIST = ["mi4a"]
@@ -104,7 +103,7 @@ class TemplateOpenWRT:
         args = parser.parse_args()
 
         self.device = args.device
-        self.device_rootfs = f"{self._REPO_DIR}/dir/{self.device}"
+        self.device_rootfs = f"./dir/{self.device}"
         self.config_file = f"{self._VAULT_DIR}/{self.device}_config.yml"
 
     def _parse_yaml(self):
@@ -188,7 +187,7 @@ class TemplateOpenWRT:
             self.logger.exception("writing template to %s failed", dest)
 
     def _copy(self):
-        dest_dir = f"{self._REPO_DIR}/templ_out/{self.device}"
+        dest_dir = f"./work/templ_out/{self.device}"
 
         for root, _, files in os.walk(self.device_rootfs):
             rel_path = os.path.relpath(root, self.device_rootfs)
