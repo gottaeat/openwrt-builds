@@ -1,0 +1,8 @@
+services:
+    openwrt-builds:
+        container_name: openwrt-builds
+        build:
+            context: .
+        volumes:
+            - ./:/repo
+            - ./work/tmp/:/tmp
