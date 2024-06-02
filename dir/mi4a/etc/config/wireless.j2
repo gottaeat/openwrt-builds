@@ -1,6 +1,6 @@
 {% for radio_name, radio_prop in radios.items() %}
 config wifi-device '{{ radio_name }}'
-    type 'mac80211'
+    option type 'mac80211'
     option path '{{ radio_prop.path }}'
     option channel 'auto'
     option band '{{ radio_prop.band }}'
