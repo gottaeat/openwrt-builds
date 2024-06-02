@@ -127,7 +127,7 @@ class TemplateOpenWRT:
 
         if self.device in self._WRT_LIST:
             required_keys["root"].append("radios")
-            required_keys["radios"] = ["passwd", "path", "ssid"]
+            required_keys["radios"] = ["passwd", "path", "ssid", "band", "htmode"]
 
         for key, value in required_keys.items():
             if key == "root":
