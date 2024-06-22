@@ -126,7 +126,7 @@ class TemplateOpenWRT:
 
         if self.device in self._WRT_LIST:
             required_keys["root"].append("radios")
-            required_keys["radios"] = ["passwd", "path", "ssid", "band", "htmode"]
+            required_keys["radios"] = ["passwd", "ssid"]
 
         for key, value in required_keys.items():
             if key == "root":
@@ -140,10 +140,12 @@ class TemplateOpenWRT:
                         self.logger.error("%s cannot be blank", item)
 
             elif key == "radios":
-                for radio in yaml_parsed["radios"].items():
-                    if radio[0][:5] != "radio":
-                        self.logger.error("radios must start with `radio'")
+                if self.device == "mi4a":
+                    for radio_name in ["crib", "guest"]:
+                        if radio_name not in yaml_parsed["radios"].keys():
+                            self.logger.error("radio name %s must be present")
 
+                for radio in yaml_parsed["radios"].items():
                     for item in value:
                         if item not in radio[1].keys():
                             self.logger.error("%s is missing from the YAML", item)
