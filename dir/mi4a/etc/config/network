@@ -1,32 +1,91 @@
-
+# - - globals - - #
 config globals 'globals'
-	option packet_steering '1'
-
-config device
-	option name 'wan'
-	option ipv6 '0'
-
-config device
-	option name 'eth0'
-	option ipv6 '0'
-
-config device
-	option name 'dumb'
-	option type 'bridge'
-	option ipv6 '0'
-	list ports 'lan1'
-	list ports 'lan2'
-	list ports 'wan'
+    option packet_steering '1'
 
 config interface 'loopback'
-	option device 'lo'
-	option proto 'static'
-	option ipaddr '127.0.0.1'
-	option netmask '255.0.0.0'
+    option device 'lo'
+    option proto 'static'
+    option ipaddr '127.0.0.1'
+    option netmask '255.0.0.0'
 
-config interface 'lan'
-	option device 'dumb'
-	option proto 'dhcp'
-	option delegate '0'
-	option force_link '1'
+# - - physical devices - - #
+config device
+    option name 'eth0'
+    option ipv6 '0'
 
+config device
+    option name 'lan1'
+    option ipv6 '0'
+
+config device
+    option name 'lan2'
+    option ipv6 '0'
+
+config device
+    option name 'wan'
+    option ipv6 '0'
+
+config device
+    option name 'phy0-ap0'
+    option ipv6 '0'
+
+config device
+    option name 'phy1-ap0'
+    option ipv6 '0'
+
+config device
+    option name 'phy1-ap1'
+    option ipv6 '0'
+
+config device
+    option name 'phy0-ap1'
+    option ipv6 '0'
+
+# - - big bridge - - #
+config device
+    option name 'br-lan'
+    option type 'bridge'
+    list ports 'lan1'
+    list ports 'lan2'
+    list ports 'wan'
+    option ipv6 '0'
+
+# - - crib lan - - #
+config bridge-vlan
+    option device 'br-lan'
+    option vlan '1'
+    list ports 'wan:t'
+
+config device
+    option name 'br-lan.1'
+    option type '8021q'
+    option ifname 'br-lan'
+    option vid '1'
+    option ipv6 '0'
+
+config interface 'lan_crib'
+    option device 'br-lan.1'
+    option proto 'dhcp'
+    option force_link '1'
+    option delegate '0'
+
+# - - guest lan - - #
+config bridge-vlan
+    option device 'br-lan'
+    option vlan '3'
+    list ports 'lan1:u'
+    list ports 'lan2:u'
+    list ports 'wan:t'
+
+config device
+    option name 'br-lan.3'
+    option type '8021q'
+    option ifname 'br-lan'
+    option vid '3'
+    option ipv6 '0'
+
+config interface 'lan_guest'
+    option device 'br-lan.3'
+    option proto 'dhcp'
+    option force_link '1'
+    option delegate '0'
